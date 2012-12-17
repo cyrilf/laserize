@@ -1,25 +1,52 @@
+
+/*
+ * Laserize a jQuery Plugin
+ * Transform two images onto an hover laser effect
+ *
+ * Copyright 2012 CYRIL F, http://cyrilf.com
+ * Released under the MIT License
+ */
+
+(function($) {
+
+	$.fn.laserize = function(options) {
+
+		var opts = $.extend({}, $.fn.laserize.defaults, options);
+		return this.each(function() {
+
+			var $this = $(this);
+			var $childrens = $this.children();
+
+			var bg = $childrens[0];
+			var hover = $childrens[1];
+
+			var thisW = $this.width();
+			var thisH = $this.height();
+
+			var imgBg = $(bg).attr('src');
+			var imgHover = $(hover).attr('src');
+
+			$this.html('<div class="item"><div class="hover"><div class="laser"></div></div></div>');
+
+			$('.item').css('height', thisH+'px');
+			$('.item').css('width', thisW+'px');
+			$('.item').css('background','url('+imgBg+')');
+			$('.item').css('background-size', thisW + 'px ' + thisH + 'px' );
+			$('.hover').css('background','url('+imgHover+')');
+			$('.hover').css('background-size', thisW + 'px ' + thisH + 'px' );
+
+			$('.laser').css('background', opts.laserColor);
+			$('.laser').css('box-shadow', '0 0 23px 7px '+ opts.laserColor);
+		}); // each
+	}; // opts
+
+	$.fn.laserize.defaults = {
+		laserColor: 'red',
+		orientation: 'vertical'
+	};
+
+})(jQuery);
+
 $(function() {
-
-	var laserColor = '#82f167';
-
-	var elmt = $("#element");
-	var bg = $('#bg');
-	var hover = $('#hover');
-
-	var elmtW = $(elmt).width();
-	var elmtH = $(elmt).height();
-
-	var imgBg = $(bg).attr('src');
-	var imgHover = $(hover).attr('src');
-
-	$('#element').html('<div class="item"><div class="hover"><div class="laser"></div></div></div>');
-	$('.item').css('height', elmtH+'px');
-	$('.item').css('width', elmtW+'px');
-	$('.item').css('background','url('+imgBg+')');
-	$('.item').css('background-size', elmtW + 'px ' + elmtH + 'px' );
-	$('.hover').css('background','url('+imgHover+')');
-	$('.hover').css('background-size', elmtW + 'px ' + elmtH + 'px' );
-
-	$('.laser').css('background', laserColor);
-	$('.laser').css('box-shadow', '0 0 23px 7px '+ laserColor);
+	$('#element').laserize({laserColor:'#82f167'});
 });
