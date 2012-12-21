@@ -35,12 +35,34 @@
 
 <p>It's a jQuery plugin.</p>
 
-<p>Laserize allow you to transform two images into a laser hover effect.
-Check out the demos.</p>
+<p>Laserize allow you to transform two images into a laser hover effect.</p>
 
-<h3>May the force be with you.</h3>
+<h2>Examples</h2>
+
+<p>You can see some examples <a href="http://cyrilf7.github.com/laserize/examples/index.html">here</a>.</p>
+
+<h2>Basic use</h2>
+
+<pre><code>$('.laserZone').laserize();
+</code></pre>
+
+<h2>Advanced use</h2>
+
+<pre><code>$('.laserzone').laserize({
+    //Css or just color of the laser
+    //laser : {'border-radius':'50%', 'box-shadow':'0 0 23px 7px red', 'background':'red'},
+    laser : '#82f167',
+    orientation :'horizontal' //orientation of the laser
+    onlyOnce : false,         //Do the animation only one time
+    speed : '1.50s',          //Speed of the animation
+    callback : function() { console.log('ok'); },  //callback when animation is done
+    limitCallback : '75%'     //limit from which the callback can be called
+});
+</code></pre>
 
 <p>If you have some problems or improvements with it, contact me.</p>
+
+<h3>May the force be with you.</h3>
 
 <p><a href="http://cyrilf.com">Cyril F - Web, Software &amp; mobile developer</a></p>
       </section>
