@@ -13,34 +13,51 @@
 		var opts = $.extend({}, $.fn.laserize.defaults, options);
 		return this.each(function() {
 
+			//Get infos from the element
 			var $this = $(this);
-			var $childrens = $this.children();
-
-			var bg = $($childrens[0]);
-			var hover = $($childrens[1]);
-
 			var thisW = $this.width();
 			var thisH = $this.height();
+
+			var $childrens = $this.children();
+			var bg = $($childrens[0]);
+			var hover = $($childrens[1]);
 
 			var imgBg = bg.attr('src');
 			var imgHover = hover.attr('src');
 
+			//Creation of our structure to display the effect
 			$this.html('<div class="laserize_item">\
 							<div class="laserize_hover">\
 								<div class="laserize_laser"></div>\
 							</div>\
 						</div>');
 
-			$this.find('.laserize_item').css({'height': thisH+'px', 'width': thisW+'px', 'background':'url('+imgBg+')', 'background-size': thisW + 'px ' + thisH + 'px'});
-			$this.find('.laserize_hover').css({'position':'relative','z-index':'2','background':'url('+imgHover+')','background-size': thisW + 'px ' + thisH + 'px', 'bottom':'0' });
-			$this.find('.laserize_laser').css({'position':'absolute','opacity':'0'});
+			//Some basic CSS
+			$this.find('.laserize_item').css({
+				'height': thisH+'px',
+				'width': thisW+'px',
+				'background':'url('+imgBg+')',
+				'background-size': thisW + 'px ' + thisH + 'px'
+			});
+			$this.find('.laserize_hover').css({
+				'position':'relative',
+				'z-index':'2',
+				'background':'url('+imgHover+')',
+				'background-size': thisW + 'px ' + thisH + 'px'
+			});
+			$this.find('.laserize_laser').css({
+				'position':'absolute',
+				'opacity':'0'
+			});
 
+			//Laser style depending on options
 			if(typeof opts.laser == "object") {
 				$this.find('.laserize_laser').css(opts.laser);
 			} else {
 				$this.find('.laserize_laser').css({'border-radius':'50%', 'box-shadow':'0 0 23px 7px '+ opts.laser, 'background':opts.laser});
 			}
 
+			//Styles depending on the orientation
 			var itemHover = {'height':'100%'};
 			var itemNonHover = {'height':'0'};
 			if(opts.orientation === 'vertical') {
@@ -53,43 +70,44 @@
 				itemNonHover = {'width':'0'};
 			}
 
+			//Hover effect
 			$this.find(".laserize_item").hover(
-					function () {
-						$this.find('.laserize_hover').css(itemHover);
-						$this.find('.laserize_laser').css({'opacity':'1', 'transition-delay':'0s'});
-					},
-					function () {
-						//if onlyOnce is set to true, doesn't reset css on the un hover transition
-						if(!opts.onlyOnce) {
-							$this.find('.laserize_hover').css(itemNonHover);
-							$this.find('.laserize_laser').css({'opacity':'0', 'transition':'opacity .25s ease', 'transition-delay':'.75s'});
-						}
+				function () {
+					$this.find('.laserize_hover').css(itemHover);
+					$this.find('.laserize_laser').css({'opacity':'1', 'transition-delay':'0s'});
+				},
+				function () {
+					//if onlyOnce is set to true, doesn't reset css on the unhover transition
+					if(!opts.onlyOnce) {
+						$this.find('.laserize_hover').css(itemNonHover);
+						$this.find('.laserize_laser').css({'opacity':'0', 'transition':'opacity .25s ease', 'transition-delay':'.75s'});
 					}
-				);
-
-			//Check if the animation is finished, in this case launch the callback
-			if(opts.callback) {
-				//test if a fixed size is receive
-				var limitFix = true;
-				//calcul the limit before callback is called
-				var limitCallBack = opts.limitCallBack;
-				if( typeof limitCallBack == 'string') {
-					if(limitCallBack.slice(-2) === 'px') {
-						limitCallBack = limitCallBack.slice(0,-2);
-					} else if (limitCallBack.slice(-1) === '%') {
-						limitCallBack = limitCallBack.slice(0,-1)/100;
-						limitFix = false;
-					}
-					limitCallBack = parseFloat(limitCallBack);
 				}
+			);
+
+			//Check if the animation is finished or reach the limit specified, in this case launch the callback
+			if(opts.callback) {
+				//calcul the limit before callback is called
+				var limitFix = true;
+				var limitCallback = opts.limitCallback;
+				if( typeof limitCallback === 'string' && limitCallback.slice(-1) === '%') {
+						limitCallback = limitCallback.slice(0,-1)/100;
+						limitFix = false;
+				} else {
+					limitCallback = parseFloat(limitCallback);
+				}
+
 				var limitV = 0, limitH = 0;
 				if(limitFix) {
-					limitV = limitH = limitCallBack;
+					limitV = limitH = limitCallback;
 				} else {
-					limitV = thisH - (thisH - thisH * limitCallBack);
-					limitH = thisW - (thisW - thisW * limitCallBack);
+					limitV = thisH - (thisH - thisH * limitCallback);
+					limitH = thisW - (thisW - thisW * limitCallback);
 				}
 
+				//Check if the limit is reach
+				//Don't know if setInterval is the best option here..
+				//Do a pull request if you want.
 				var interval = setInterval(function(){
 					var bool = false;
 					if(opts.orientation === 'vertical') {
@@ -105,12 +123,12 @@
 					}
 				}, 500);
 			}
-	}); // each
-}; // opts
+		}); // each
+	}; // opts
 
 	$.fn.laserize.defaults = {
 		//Css or just color of the laser
-		//laser : {'border-radius':'50%', 'box-shadow':'0 0 23px 7px red', 'background':red},
+		//laser : {'border-radius':'50%', 'box-shadow':'0 0 23px 7px red', 'background':'red'},
 		laser : 'red'
 		//orientation of the laser
 		, orientation : 'vertical'
@@ -121,21 +139,21 @@
 		//callback when animation is done
 		, callback : null
 		//limit from which the callback can be called
-		, limitCallBack : '100%'
+		, limitCallback : '100%'
 	};
 })(jQuery);
 
 //Call to the jquery function
 $(function() {
-	$('#zone1').laserize({});
+	$('#zone1').laserize();
 
 	$('#zone2').laserize(
 		{
-			laser : '#82f167'
-			, orientation :'horizontal'
-			, onlyOnce : false
-			, speed : '1.50s'
-			, callback : function() { console.log('ok'); }
-			, limitCallBack : '75%'
+			laser : '#82f167',
+			orientation :'horizontal',
+			onlyOnce : false,
+			speed : '1.50s',
+			callback : function() { console.log('ok'); },
+			limitCallback : '75%'
 		});
 });
