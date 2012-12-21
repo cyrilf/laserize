@@ -6,7 +6,7 @@ Laserize allow you to transform two images into a laser hover effect.
 
 ##Examples
 
-You can see some examples [here](http://cyrilf7.github.com/laserize/examples/index.html).
+You can see some examples [here](http://cyrilf7.github.com/laserize).
 
 ##Basic use
 
