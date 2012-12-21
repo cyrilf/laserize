@@ -5,9 +5,44 @@
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="Laserize : Laserize allow you to transform two images into a laser hover effect." />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script type="text/javascript" src="../jquery.laserize-min.js"></script>
+    <script type="text/javascript">
+        //Call to the jquery function
+        $(function() {
+            $('#zone1').laserize();
 
+            $('#zone2').laserize({
+                laser : '#82f167',
+                orientation :'horizontal',
+                onlyOnce : false,
+                speed : '1.50s',
+                callback : function() { console.log('ok'); },
+                limitCallback : '75%'
+            });
+        });
+    </script>
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <style type="text/css">
+        #project_title {
+            float : left;
+        }
 
+        #by_author {
+          display: inline-block;
+          margin-top : 28px;
+          margin-left : 8px;
+        }
+
+        #project_tagline {
+          clear: both;
+        }
+
+        .laserZone {
+            width : 620px;
+            height : 465px;
+        }
+    </style>
     <title>Laserize</title>
   </head>
 
@@ -19,6 +54,7 @@
           <a id="forkme_banner" href="https://github.com/cyrilf7/laserize">View on GitHub</a>
 
           <h1 id="project_title">Laserize</h1>
+          <a href="http://cyrilf.com" id="by_author">by Cyril F</a>
           <h2 id="project_tagline">Laserize allow you to transform two images into a laser hover effect.</h2>
 
             <section id="downloads">
@@ -39,12 +75,17 @@
 
 <h2>Examples</h2>
 
-<p>You can see some examples <a href="http://cyrilf7.github.com/laserize/examples/index.html">here</a>.</p>
 
 <h2>Basic use</h2>
 
 <pre><code>$('.laserZone').laserize();
 </code></pre>
+
+<div class="laserZone" id="zone1">
+    <img id="bg" src="img/bg.jpg" />
+    <img id="hover" src="img/hover.jpg" />
+</div>
+
 
 <h2>Advanced use</h2>
 
@@ -60,11 +101,17 @@
 });
 </code></pre>
 
+<div class="laserZone" id="zone2">
+    <img id="bg" src="img/bg.jpg" />
+    <img id="hover" src="img/hover.jpg" />
+</div>
+
+<br />
 <p>If you have some problems or improvements with it, contact me.</p>
 
 <h3>May the force be with you.</h3>
 
-<p><a href="http://cyrilf.com">Cyril F - Web, Software &amp; mobile developer</a></p>
+<p><h2><a href="http://cyrilf.com">Cyril F - Web, Software &amp; mobile developer</a></h2></p>
       </section>
     </div>
 
@@ -76,7 +123,7 @@
       </footer>
     </div>
 
-    
+
 
   </body>
 </html>
