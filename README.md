@@ -1,18 +1,18 @@
-#Laserize
+# Laserize
 
 It's a jQuery plugin.
 
-Laserize allow you to transform two images into a laser hover effect.
+Laserize allow you to transform two images into a shinny laser hover effect.
 
-##Examples
+## Examples
 
-You can see some examples [here](http://cyrilf7.github.com/laserize).
+Here is some [live examples](http://cyrilf7.github.com/laserize).
 
-##Basic use
+## Basic use
 
     $('.laserZone').laserize();
 
-##Advanced use
+## Advanced use
 
     $('.laserzone').laserize({
         //Css or just color of the laser
@@ -28,6 +28,6 @@ You can see some examples [here](http://cyrilf7.github.com/laserize).
 
 If you have some problems or improvements with it, contact me.
 
-###May the force be with you.
+### May the force be with you.
 
-[Cyril F - Web, Software & mobile developer](http://cyrilf.com)
+[Cyril F - Web developer](http://cyrilf.com)
